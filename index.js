@@ -48,36 +48,6 @@ const composeURL = function composeURL(data) {
 *   body <Object>
 * }
 */
-// const composeFetch = function composeFetch(data) {
-//   return (params) => {
-//     const url = composeURL(data)(params);
-//     const request = {
-//       method: params.method || 'get',
-//       headers: params.headers || {
-//         Accept: 'application/json',
-//         'Content-Type': 'application/json',
-//       },
-//       body: params.method && ['post', 'put'].includes(params.method.toLowerCase()) ?
-//       JSON.stringify(params.body || {}) :
-//       undefined,
-//     };
-//     const interceptors = Object.assign({
-//       request: req => req,
-//       response: (response) => {
-//         if (response.status >= 200 && response.status < 300) {
-//           return Object.assign(response.json(), { code: response.status });
-//         }
-//         return response.json().then((error) => {
-//           throw Object.assign(error, { code: response.status });
-//         });
-//       },
-//     }, (params.interceptors || {}));
-//     return Object.assign(fetch(url, interceptors
-//       .request(request))
-//       .then(interceptors.response), { url });
-//   };
-// };
-
 class ComposeFetch {
   constructor(data) {
     this.url_maker = composeURL(data);
