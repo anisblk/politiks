@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+const Api = require('../index');
+
+const dummy = new Api({
+  protocol: 'http',
+  domain_name: 'localhost',
+  port: 3000,
+});
+
+const getUsers = query => dummy.route({
+  path: '/users',
+  query,
+});
+
+const getUsersCall = getUsers({ filter: 'trusted' });
+
+console.log('URL of the call:');
+console.log(getUsersCall.url);
+
+console.log('\n');
+
+console.log('Data fetched:');
+getUsersCall
+.then(console.log)
+.catch(console.log);

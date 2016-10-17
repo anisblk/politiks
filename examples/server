@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+console.log('Server launched on port 3000...');
+
+const koa = require('koa');
+const router = require('koa-router')();
+const Boom = require('boom');
+
+const app = koa();
+
+router
+.get('/users',
+  function* (next) {
+    this.body = { data: [{ complete_name: 'Batman' }] };
+  }
+)
+.get('*',
+  function* (next) {
+    throw new Boom.notFound();
+  }
+);
+
+// Default json
+app.use(
+  function* (next) {
+    this.set('Content-Type', 'application/json');
+    yield next;
+  }
+);
+
+// Errors
+app.use(function* (next) {
+  try {
+    yield next;
+  } catch (error) {
+    this.body = error;
+  }
+});
+
+app.use(router.routes());
+
+app.listen(3000);
