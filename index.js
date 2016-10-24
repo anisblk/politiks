@@ -50,8 +50,9 @@ const composeURL = function composeURL(data) {
 */
 class ComposeFetch {
   constructor(data) {
-    this.url_maker = composeURL(data);
+    this.url_maker = typeof data === 'string' ? data : composeURL(data);
   }
+
   route(params) {
     const url = this.url_maker(params);
     const request = {
